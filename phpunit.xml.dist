@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+		 backupGlobals="false"
+		 colors="true"
+		 verbose="true">
+	<testsuites>
+		<testsuite name="N3ttechTest">
+			<directory suffix="Test.php">./tests</directory>
+		</testsuite>
+	</testsuites>
+
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">src</directory>
+		</whitelist>
+	</filter>
+
+	<php>
+		<const name="PHPUNIT_TESTSUITE" value="true"/>
+	</php>
+</phpunit>

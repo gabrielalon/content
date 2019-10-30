@@ -1,0 +1,35 @@
+{
+    "name": "n3ttech/content",
+    "keywords": ["content"],
+    "license": "MIT",
+    "authors": [{"name": "n3ttech", "email": "mrode@n3tte.ch"}],
+    "autoload": {
+        "psr-4": {
+            "N3ttech\\Content\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "N3ttech\\Content\\Test\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.3",
+        "n3ttech/messaging": "^1.1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.4",
+        "phpstan/phpstan": "^0.11.19",
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "squizlabs/php_codesniffer": "^3.5",
+        "n3ttech/checking": "^1.1"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "N3ttech\\Checking\\ScriptHandler::run"
+        ],
+        "post-update-cmd": [
+            "N3ttech\\Checking\\ScriptHandler::run"
+        ]
+    }
+}

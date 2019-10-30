@@ -1,0 +1,11 @@
+###> n3ttech/content ###
+vendor
+composer.lock
+.idea
+.DS_Store
+###> n3ttech/content ###;
+
+###> n3ttech/checking ###
+.php_cs.cache
+.phpunit.result.cache
+###> n3ttech/checking ###

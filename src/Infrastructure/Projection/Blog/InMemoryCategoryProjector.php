@@ -6,7 +6,7 @@ use N3ttech\Content\Application\Blog\Event;
 use N3ttech\Content\Application\Blog\Query\ReadModel;
 use N3ttech\Content\Domain\Model\Blog\Projection\CategoryProjection;
 
-class InMemoryCategoryProjector implements CategoryProjection
+final class InMemoryCategoryProjector implements CategoryProjection
 {
     /** @var ReadModel\CategoryCollection */
     private $entities;

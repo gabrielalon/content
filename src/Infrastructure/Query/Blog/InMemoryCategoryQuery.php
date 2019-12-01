@@ -4,7 +4,7 @@ namespace N3ttech\Content\Infrastructure\Query\Blog;
 
 use N3ttech\Content\Application\Blog\Query;
 
-class InMemoryCategoryQuery implements Query\V1\CategoryQuery
+final class InMemoryCategoryQuery implements Query\V1\CategoryQuery
 {
     /** @var Query\ReadModel\CategoryCollection */
     private $entities;

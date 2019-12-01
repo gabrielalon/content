@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class MoveCategory extends Command
+final class MoveCategory extends Command
 {
     /** @var string */
     private $parental;

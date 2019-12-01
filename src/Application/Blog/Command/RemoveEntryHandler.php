@@ -5,7 +5,7 @@ namespace N3ttech\Content\Application\Blog\Command;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Message\Domain\Message;
 
-class RemoveEntryHandler extends EntryHandler
+final class RemoveEntryHandler extends EntryHandler
 {
     /**
      * @param RemoveEntry $command

@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class CategorizeEntry extends Command
+final class CategorizeEntry extends Command
 {
     /** @var string[] */
     private $categories;

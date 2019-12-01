@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Common\Release;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Message\Domain\Message;
 
-class ReleaseEntryHandler extends EntryHandler
+final class ReleaseEntryHandler extends EntryHandler
 {
     /**
      * @param ReleaseEntry $command

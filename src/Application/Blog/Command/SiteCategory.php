@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class SiteCategory extends Command
+final class SiteCategory extends Command
 {
     /** @var string[] */
     private $sites;

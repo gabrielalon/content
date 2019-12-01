@@ -6,7 +6,7 @@ use N3ttech\Content\Application\Blog\Event;
 use N3ttech\Content\Application\Blog\Query\ReadModel;
 use N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection;
 
-class InMemoryEntryProjector implements EntryProjection
+final class InMemoryEntryProjector implements EntryProjection
 {
     /** @var ReadModel\EntryCollection */
     private $entities;

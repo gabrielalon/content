@@ -5,7 +5,7 @@ namespace N3ttech\Content\Application\Blog\Event;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 
-class ExistingEntryRemoved extends EntryEvent
+final class ExistingEntryRemoved extends EntryEvent
 {
     /**
      * @param Entry $entry

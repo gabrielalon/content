@@ -5,7 +5,7 @@ namespace N3ttech\Content\Application\Blog\Command;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Message\Domain\Message;
 
-class ShowEntryHandler extends EntryHandler
+final class ShowEntryHandler extends EntryHandler
 {
     /**
      * @param ShowEntry $command

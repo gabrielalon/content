@@ -11,6 +11,6 @@ class FindAllSitedCategoriesHandler extends CategoryQueryHandler
      */
     public function run(Message $query): void
     {
-        $this->ask->findAllSitedCategories($query);
+        $this->query->findAllSitedCategories($query);
     }
 }

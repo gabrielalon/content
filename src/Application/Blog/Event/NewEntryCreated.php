@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Valuing as VO;
 
-class NewEntryCreated extends ExistingEntryReleased
+final class NewEntryCreated extends EntryEvent
 {
     /**
      * @throws \Assert\AssertionFailedException

@@ -5,9 +5,8 @@ namespace N3ttech\Content\Infrastructure\Persist\Page;
 use N3ttech\Content\Domain\Model\Page\Page;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Messaging\Aggregate\Persist\AggregateRepository;
-use N3ttech\Valuing as VO;
 
-class PageRepository extends AggregateRepository
+final class PageRepository extends AggregateRepository
 {
     /**
      * {@inheritdoc}
@@ -28,14 +27,14 @@ class PageRepository extends AggregateRepository
     }
 
     /**
-     * @param string $uuid
+     * @param string $key
      *
      * @throws \Assert\AssertionFailedException
      *
      * @return AggregateRoot|Page
      */
-    public function find(string $uuid): AggregateRoot
+    public function find(string $key): AggregateRoot
     {
-        return $this->findAggregateRoot(VO\Identity\Uuid::fromIdentity($uuid));
+        return $this->findAggregateRoot(Page\Key::fromString($key));
     }
 }

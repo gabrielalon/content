@@ -7,13 +7,13 @@ use N3ttech\Messaging\Query\QueryHandling\QueryHandler;
 abstract class CategoryQueryHandler implements QueryHandler
 {
     /** @var CategoryQuery */
-    protected $ask;
+    protected $query;
 
     /**
-     * @param CategoryQuery $ask
+     * @param CategoryQuery $query
      */
-    public function __construct(CategoryQuery $ask)
+    public function __construct(CategoryQuery $query)
     {
-        $this->ask = $ask;
+        $this->query = $query;
     }
 }

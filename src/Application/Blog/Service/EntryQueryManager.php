@@ -6,7 +6,7 @@ use N3ttech\Content\Application\Blog\Query;
 use N3ttech\Messaging\Manager\QueryManager;
 use N3ttech\Messaging\Query\Exception;
 
-class EntryQueryManager extends QueryManager
+final class EntryQueryManager extends QueryManager
 {
     /**
      * @param string $uuid

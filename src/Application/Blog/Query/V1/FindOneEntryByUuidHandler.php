@@ -11,6 +11,6 @@ class FindOneEntryByUuidHandler extends EntryQueryHandler
      */
     public function run(Message $query): void
     {
-        $this->ask->findOneEntryByUuid($query);
+        $this->query->findOneEntryByUuid($query);
     }
 }

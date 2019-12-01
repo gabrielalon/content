@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class ReleaseEntry extends Command
+final class ReleaseEntry extends Command
 {
     /** @var int */
     private $releaseDate;

@@ -7,11 +7,11 @@ use N3ttech\Messaging\Query\Query;
 class EntryCollection extends \ArrayIterator implements Query\ViewableCollection
 {
     /**
-     * @param Entry $site
+     * @param Entry $entry
      */
-    public function add(Query\Viewable $site): void
+    public function add(Query\Viewable $entry): void
     {
-        $this->offsetSet($site->identifier(), $site);
+        $this->offsetSet($entry->identifier(), $entry);
     }
 
     /**

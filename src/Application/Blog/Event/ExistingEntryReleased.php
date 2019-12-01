@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Common\Release;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 
-class ExistingEntryReleased extends EntryEvent
+final class ExistingEntryReleased extends EntryEvent
 {
     /**
      * @return Release

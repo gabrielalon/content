@@ -11,6 +11,6 @@ class FindOneCategoryByUuidHandler extends CategoryQueryHandler
      */
     public function run(Message $query): void
     {
-        $this->ask->findOneCategoryByUuid($query);
+        $this->query->findOneCategoryByUuid($query);
     }
 }

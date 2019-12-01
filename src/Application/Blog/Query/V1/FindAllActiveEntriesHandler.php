@@ -11,6 +11,6 @@ class FindAllActiveEntriesHandler extends EntryQueryHandler
      */
     public function run(Message $query): void
     {
-        $this->ask->findAllActiveEntries($query);
+        $this->query->findAllActiveEntries($query);
     }
 }

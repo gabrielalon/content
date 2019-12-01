@@ -7,7 +7,7 @@ use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Messaging\Aggregate\Persist\AggregateRepository;
 use N3ttech\Valuing as VO;
 
-class CategoryRepository extends AggregateRepository
+final class CategoryRepository extends AggregateRepository
 {
     /**
      * {@inheritdoc}

@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class CreateCategory extends Command
+final class CreateCategory extends Command
 {
     /**
      * @param string $uuid

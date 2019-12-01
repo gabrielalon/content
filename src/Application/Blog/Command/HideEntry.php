@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class HideEntry extends Command
+final class HideEntry extends Command
 {
     /**
      * @param string $uuid

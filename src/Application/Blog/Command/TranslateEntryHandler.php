@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Common\Content;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Message\Domain\Message;
 
-class TranslateEntryHandler extends EntryHandler
+final class TranslateEntryHandler extends EntryHandler
 {
     /**
      * @param TranslateEntry $command

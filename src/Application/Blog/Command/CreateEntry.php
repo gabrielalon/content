@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class CreateEntry extends Command
+final class CreateEntry extends Command
 {
     /**
      * @param string $uuid

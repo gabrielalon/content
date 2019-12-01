@@ -5,7 +5,7 @@ namespace N3ttech\Content\Application\Blog\Command;
 use N3ttech\Content\Domain\Model\Blog\Category;
 use N3ttech\Messaging\Message\Domain\Message;
 
-class RemoveCategoryHandler extends CategoryHandler
+final class RemoveCategoryHandler extends CategoryHandler
 {
     /**
      * @param MoveCategory $command

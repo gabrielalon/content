@@ -7,13 +7,13 @@ use N3ttech\Messaging\Query\QueryHandling\QueryHandler;
 abstract class EntryQueryHandler implements QueryHandler
 {
     /** @var EntryQuery */
-    protected $ask;
+    protected $query;
 
     /**
-     * @param EntryQuery $ask
+     * @param EntryQuery $query
      */
-    public function __construct(EntryQuery $ask)
+    public function __construct(EntryQuery $query)
     {
-        $this->ask = $ask;
+        $this->query = $query;
     }
 }

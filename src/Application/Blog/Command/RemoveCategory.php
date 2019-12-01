@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class RemoveCategory extends Command
+final class RemoveCategory extends Command
 {
     /**
      * @param string $uuid

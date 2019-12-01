@@ -2,55 +2,40 @@
 
 namespace N3ttech\Content\Domain\Model\Page;
 
+use N3ttech\Content\Application\Page\Event;
+use N3ttech\Content\Domain\Common;
+use N3ttech\Content\Domain\Model\Page\Page\Key;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Valuing as VO;
 
 class Page extends AggregateRoot
 {
-    /** @var VO\Intl\Language\Texts */
-    private $names;
-
-    /** @var VO\Intl\Language\Contents */
-    private $contents;
+    /** @var Common\Content */
+    private $content;
 
     /** @var VO\Identity\Uuids */
     private $sites;
 
-    /** @var VO\Option\Check */
-    private $hide;
-
     /**
-     * @param VO\Identity\Uuid $uuid
+     * @param Page\Key $key
      *
      * @return Page
      */
-    public function setUuid(VO\Identity\Uuid $uuid): Page
+    public function setKey(Page\Key $key): Page
     {
-        $this->setAggregateId($uuid);
+        $this->setAggregateId($key);
 
         return $this;
     }
 
     /**
-     * @param VO\Intl\Language\Texts $names
+     * @param Common\Content $content
      *
      * @return Page
      */
-    public function setNames(VO\Intl\Language\Texts $names): Page
+    public function setContent(Common\Content $content): Page
     {
-        $this->names = $names;
-
-        return $this;
-    }
-
-    /**
-     * @param VO\Intl\Language\Contents $contents
-     *
-     * @return Page
-     */
-    public function setContents(VO\Intl\Language\Contents $contents): Page
-    {
-        $this->contents = $contents;
+        $this->content = $content;
 
         return $this;
     }
@@ -68,14 +53,43 @@ class Page extends AggregateRoot
     }
 
     /**
-     * @param VO\Option\Check $hide
+     * @param Key $key
      *
      * @return Page
+     *
+     * @throws \Assert\AssertionFailedException
      */
-    public function setHide(VO\Option\Check $hide): Page
+    public static function createNewPage(Key $key): Page
     {
-        $this->hide = $hide;
+        $category = new static();
 
-        return $this;
+        $category->recordThat(Event\NewPageCreated::occur($key->toString()));
+
+        return $category;
+    }
+
+    /**
+     * @param Common\Content $content
+     */
+    public function translate(Common\Content $content): void
+    {
+        $this->recordThat(Event\ExistingPageTranslated::occur($this->aggregateId(), [
+            'content' => $content->raw(),
+        ]));
+    }
+
+    /**
+     * @param VO\Identity\Uuids $sites
+     */
+    public function sited(VO\Identity\Uuids $sites): void
+    {
+        $this->recordThat(Event\ExistingPageSited::occur($this->aggregateId(), [
+            'sites' => $sites->toArray(),
+        ]));
+    }
+
+    public function remove(): void
+    {
+        $this->recordThat(Event\ExistingPageRemoved::occur($this->aggregateId()));
     }
 }

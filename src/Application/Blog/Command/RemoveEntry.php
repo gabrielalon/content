@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class RemoveEntry extends Command
+final class RemoveEntry extends Command
 {
     /**
      * @param string $uuid

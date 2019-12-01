@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Model\Blog\Category;
 use N3ttech\Messaging\Message\Domain\Message;
 use N3ttech\Valuing as VO;
 
-class MoveCategoryHandler extends CategoryHandler
+final class MoveCategoryHandler extends CategoryHandler
 {
     /**
      * @param MoveCategory $command

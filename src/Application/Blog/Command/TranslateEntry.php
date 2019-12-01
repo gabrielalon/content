@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class TranslateEntry extends Command
+final class TranslateEntry extends Command
 {
     /** @var string[] */
     private $names;

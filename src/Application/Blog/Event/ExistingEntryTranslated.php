@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Common\Content;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 
-class ExistingEntryTranslated extends EntryEvent
+final class ExistingEntryTranslated extends EntryEvent
 {
     /**
      * @return Content

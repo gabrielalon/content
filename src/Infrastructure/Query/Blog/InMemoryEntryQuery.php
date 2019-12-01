@@ -4,7 +4,7 @@ namespace N3ttech\Content\Infrastructure\Query\Blog;
 
 use N3ttech\Content\Application\Blog\Query;
 
-class InMemoryEntryQuery implements Query\V1\EntryQuery
+final class InMemoryEntryQuery implements Query\V1\EntryQuery
 {
     /** @var Query\ReadModel\EntryCollection */
     private $entities;

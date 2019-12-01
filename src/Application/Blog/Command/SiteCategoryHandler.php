@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Model\Blog\Category;
 use N3ttech\Messaging\Message\Domain\Message;
 use N3ttech\Valuing as VO;
 
-class SiteCategoryHandler extends CategoryHandler
+final class SiteCategoryHandler extends CategoryHandler
 {
     /**
      * @param SiteCategory $command

@@ -6,7 +6,7 @@ use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Message\Domain\Message;
 use N3ttech\Valuing as VO;
 
-class CategorizeEntryHandler extends EntryHandler
+final class CategorizeEntryHandler extends EntryHandler
 {
     /**
      * @param CategorizeEntry $command

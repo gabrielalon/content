@@ -5,7 +5,7 @@ namespace N3ttech\Content\Application\Blog\Service;
 use N3ttech\Content\Application\Blog\Command;
 use N3ttech\Messaging\Manager\CommandManager;
 
-class EntryCommandManager extends CommandManager
+final class EntryCommandManager extends CommandManager
 {
     /**
      * @param string $uuid

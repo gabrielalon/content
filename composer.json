@@ -15,7 +15,8 @@
     },
     "require": {
         "php": ">=7.3",
-        "n3ttech/messaging": "^1.1.1"
+        "n3ttech/messaging": "^1.1.1",
+        "anahkiasen/underscore-php": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.4",

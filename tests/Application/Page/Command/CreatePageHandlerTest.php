@@ -38,7 +38,7 @@ class CreatePageHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itCreatesNewPagePageTest(): void
+    public function itCreatesNewPageTest(): void
     {
         //given
         $key = Page\Key::fromString('Some Page');

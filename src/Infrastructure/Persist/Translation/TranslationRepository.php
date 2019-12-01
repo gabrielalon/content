@@ -5,9 +5,8 @@ namespace N3ttech\Content\Infrastructure\Persist\Translation;
 use N3ttech\Content\Domain\Model\Translation\Translation;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Messaging\Aggregate\Persist\AggregateRepository;
-use N3ttech\Valuing as VO;
 
-class TranslationRepository extends AggregateRepository
+final class TranslationRepository extends AggregateRepository
 {
     /**
      * {@inheritdoc}
@@ -28,14 +27,14 @@ class TranslationRepository extends AggregateRepository
     }
 
     /**
-     * @param string $uuid
+     * @param string $key
      *
      * @throws \Assert\AssertionFailedException
      *
      * @return AggregateRoot|Translation
      */
-    public function find(string $uuid): AggregateRoot
+    public function find(string $key): AggregateRoot
     {
-        return $this->findAggregateRoot(VO\Identity\Uuid::fromIdentity($uuid));
+        return $this->findAggregateRoot(Translation\Key::fromString($key));
     }
 }

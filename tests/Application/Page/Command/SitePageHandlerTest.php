@@ -39,7 +39,7 @@ class SitePageHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itSitesExistingPagePageTest(): void
+    public function itSitesExistingPageTest(): void
     {
         //given
         $key = Page\Key::fromString('Some Page');

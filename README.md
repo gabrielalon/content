@@ -37,5 +37,5 @@ Entry
 
 #####Translation
 - key ```<string>```
-- site ```<string>```
-- contents ```array(<string>)```
+- sites ```array(<string>)```
+- values ```array(<string>)```

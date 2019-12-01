@@ -39,7 +39,7 @@ class TranslatePageHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itCategorizesExistingPagePageTest(): void
+    public function itCategorizesExistingPageTest(): void
     {
         //given
         $key = Page\Key::fromString('Some Page');

@@ -4,7 +4,6 @@ namespace N3ttech\Content\Domain\Model\Page;
 
 use N3ttech\Content\Application\Page\Event;
 use N3ttech\Content\Domain\Common;
-use N3ttech\Content\Domain\Model\Page\Page\Key;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Valuing as VO;
 
@@ -53,13 +52,13 @@ class Page extends AggregateRoot
     }
 
     /**
-     * @param Key $key
+     * @param Page\Key $key
      *
      * @return Page
      *
      * @throws \Assert\AssertionFailedException
      */
-    public static function createNewPage(Key $key): Page
+    public static function createNewPage(Page\Key $key): Page
     {
         $category = new static();
 

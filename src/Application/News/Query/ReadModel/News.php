@@ -238,7 +238,7 @@ class News implements Viewable
     public function addContent(string $locale, string $content): News
     {
         if (null === $this->contents) {
-            $this->setNames(VO\Intl\Language\Texts::fromArray([]));
+            $this->setContents(VO\Intl\Language\Contents::fromArray([]));
         }
 
         $this->contents->addLocale($locale, $content);

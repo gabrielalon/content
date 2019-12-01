@@ -39,7 +39,7 @@ class RemovePageHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itRemovesExistingPagePageTest(): void
+    public function itRemovesExistingPageTest(): void
     {
         //given
         $key = Page\Key::fromString('Some Page');

@@ -1,11 +1,11 @@
 <?php
 
-namespace N3ttech\Content\Domain\Model\Snippet;
+namespace N3ttech\Content\Domain\Model\Translation;
 
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Valuing as VO;
 
-class Snippet extends AggregateRoot
+class Translation extends AggregateRoot
 {
     /** @var VO\Char\Text */
     private $key;
@@ -16,9 +16,9 @@ class Snippet extends AggregateRoot
     /**
      * @param VO\Identity\Uuid $uuid
      *
-     * @return Snippet
+     * @return Translation
      */
-    public function setUuid(VO\Identity\Uuid $uuid): Snippet
+    public function setUuid(VO\Identity\Uuid $uuid): Translation
     {
         $this->setAggregateId($uuid);
 
@@ -28,9 +28,9 @@ class Snippet extends AggregateRoot
     /**
      * @param VO\Char\Text $key
      *
-     * @return Snippet
+     * @return Translation
      */
-    public function setKey(VO\Char\Text $key): Snippet
+    public function setKey(VO\Char\Text $key): Translation
     {
         $this->key = $key;
 
@@ -40,9 +40,9 @@ class Snippet extends AggregateRoot
     /**
      * @param VO\Intl\Language\Contents $contents
      *
-     * @return Snippet
+     * @return Translation
      */
-    public function setContents(VO\Intl\Language\Contents $contents): Snippet
+    public function setContents(VO\Intl\Language\Contents $contents): Translation
     {
         $this->contents = $contents;
 

@@ -27,7 +27,7 @@ test: ## executes phpunit tests
 		./vendor/bin/phpunit --do-not-cache-result --colors=always
 
 .PHONY: cs-style
-cs-style: cs cs-check style test ## executes php cs fixer, executes php cs fixer in dry run mode and executes php analizers
+cs-style: cs cs-check test ## executes php cs fixer, executes php cs fixer in dry run mode and executes php analizers
 
 .PHONY: help
 help: ## Display this help message

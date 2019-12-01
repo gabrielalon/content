@@ -111,7 +111,7 @@ class Category implements Viewable
      */
     public function sites(): array
     {
-        return $this->sites->raw();
+        return $this->sites->toArray();
     }
 
     /**

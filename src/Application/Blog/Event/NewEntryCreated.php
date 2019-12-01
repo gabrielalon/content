@@ -2,6 +2,30 @@
 
 namespace N3ttech\Content\Application\Blog\Event;
 
-class NewEntryCreated extends ExistingEntryUpdated
+use N3ttech\Content\Domain\Model\Blog\Entry;
+use N3ttech\Messaging\Aggregate\AggregateRoot;
+use N3ttech\Valuing as VO;
+
+class NewEntryCreated extends ExistingEntryReleased
 {
+    /**
+     * @throws \Assert\AssertionFailedException
+     *
+     * @return VO\Date\Time
+     */
+    public function entryCreationDate(): VO\Date\Time
+    {
+        return VO\Date\Time::fromTimestamp($this->payload['creation_date']);
+    }
+
+    /**
+     * @param Entry $entry
+     *
+     * @throws \Assert\AssertionFailedException
+     */
+    public function populate(AggregateRoot $entry): void
+    {
+        $entry->setUuid($this->entryUuid());
+        $entry->setCreationDate($this->entryCreationDate());
+    }
 }

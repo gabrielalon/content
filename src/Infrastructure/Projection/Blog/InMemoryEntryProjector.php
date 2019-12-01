@@ -12,7 +12,7 @@ class InMemoryEntryProjector implements EntryProjection
     private $entities;
 
     /**
-     * @param null|ReadModel\EntryCollection $entities
+     * @param ReadModel\EntryCollection|null $entities
      */
     public function __construct(ReadModel\EntryCollection $entities = null)
     {
@@ -30,9 +30,8 @@ class InMemoryEntryProjector implements EntryProjection
      */
     public function onNewEntryCreated(Event\NewEntryCreated $event): void
     {
-        $this->entities->add(
-            ReadModel\Entry::fromUuid($event->entryUuid())
-                ->setPublishDate($event->entryPublishDate())
+        $this->entities->add(ReadModel\Entry::fromUuid($event->entryUuid())
+            ->setCreationDate($event->entryCreationDate())
         );
     }
 
@@ -59,47 +58,13 @@ class InMemoryEntryProjector implements EntryProjection
      * @throws \Assert\AssertionFailedException
      * @throws \RuntimeException
      */
-    public function onExistingEntryHidden(Event\ExistingEntryHidden $event): void
-    {
-        $this->checkExistence($event->aggregateId());
-
-        $entry = $this->entities->get($event->aggregateId())
-            ->setHide($event->entryHide())
-        ;
-
-        $this->entities->add($entry);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Assert\AssertionFailedException
-     * @throws \RuntimeException
-     */
-    public function onExistingEntryShown(Event\ExistingEntryShown $event): void
-    {
-        $this->checkExistence($event->aggregateId());
-
-        $entry = $this->entities->get($event->aggregateId())
-            ->setHide($event->entryHide())
-        ;
-
-        $this->entities->add($entry);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Assert\AssertionFailedException
-     * @throws \RuntimeException
-     */
     public function onExistingEntryTranslated(Event\ExistingEntryTranslated $event): void
     {
         $this->checkExistence($event->aggregateId());
 
         $entry = $this->entities->get($event->aggregateId())
-            ->setNames($event->entryNames())
-            ->setContents($event->entryContents())
+            ->setNames($event->entryContent()->names())
+            ->setContents($event->entryContent()->texts())
         ;
 
         $this->entities->add($entry);
@@ -111,12 +76,13 @@ class InMemoryEntryProjector implements EntryProjection
      * @throws \Assert\AssertionFailedException
      * @throws \RuntimeException
      */
-    public function onExistingEntryUpdated(Event\ExistingEntryUpdated $event): void
+    public function onExistingEntryReleased(Event\ExistingEntryReleased $event): void
     {
         $this->checkExistence($event->aggregateId());
 
         $entry = $this->entities->get($event->aggregateId())
-            ->setPublishDate($event->entryPublishDate())
+            ->setReleaseDate($event->entryRelease()->releaseDate())
+            ->setHidden($event->entryRelease()->hidden())
         ;
 
         $this->entities->add($entry);
@@ -157,10 +123,7 @@ class InMemoryEntryProjector implements EntryProjection
     private function checkExistence(string $uuid): void
     {
         if (false === $this->entities->has($uuid)) {
-            throw new \RuntimeException(\sprintf(
-                'Entry does not exists on given uuid: %s',
-                $uuid
-            ));
+            throw new \RuntimeException(\sprintf('Entry does not exists on given uuid: %s', $uuid));
         }
     }
 }

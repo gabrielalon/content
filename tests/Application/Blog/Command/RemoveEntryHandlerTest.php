@@ -18,7 +18,7 @@ use N3ttech\Valuing as VO;
  * @internal
  * @coversNothing
  */
-class CreateEntryHandlerTest extends HandlerTestCase
+class RemoveEntryHandlerTest extends HandlerTestCase
 {
     /** @var Service\EntryCommandManager */
     private $command;
@@ -29,6 +29,7 @@ class CreateEntryHandlerTest extends HandlerTestCase
 
         $this->register(Projection\EntryProjection::class, new InMemoryEntryProjector());
         $this->register(Command\CreateEntryHandler::class, new Command\CreateEntryHandler($repository));
+        $this->register(Command\RemoveEntryHandler::class, new Command\RemoveEntryHandler($repository));
 
         $this->command = new Service\EntryCommandManager($this->getCommandBus());
     }
@@ -39,35 +40,30 @@ class CreateEntryHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itCreatesNewBlogEntryTest(): void
+    public function itRemovesExistingBlogEntryTest(): void
     {
         //given
         $uuid = \Ramsey\Uuid\Uuid::uuid4();
-
-        //when
         $this->command->create($uuid->toString());
 
+        //when
+        $this->command->remove($uuid->toString());
+
         //then
-        /** @var InMemoryEntryProjector $projector */
-        $projector = $this->container->get(Projection\EntryProjection::class);
-        $entity = $projector->get($uuid->toString());
-
-        $this->assertEquals($entity->identifier(), $uuid->toString());
-
         $aggregateId = VO\Identity\Uuid::fromIdentity($uuid->toString());
-        $collection = $this->getStreamRepository()->load($aggregateId, 1);
+        $collection = $this->getStreamRepository()->load($aggregateId, 2);
 
         foreach ($collection->getArrayCopy() as $eventStream) {
             $event = $eventStream->getEventName();
             /** @var AggregateChanged $event */
 
-            /** @var Event\NewEntryCreated $event */
+            /** @var Event\ExistingEntryRemoved $event */
             $event = $event::fromEventStream($eventStream);
 
-            $this->assertTrue($entity->getUuid()->equals($event->entryUuid()));
+            $this->assertInstanceOf(Event\ExistingEntryRemoved::class, $event);
         }
 
         $snapshot = $this->getSnapshotRepository()->get(AggregateType::fromAggregateRootClass(Entry::class), $aggregateId);
-        $this->assertEquals($snapshot->getLastVersion(), 1);
+        $this->assertEquals($snapshot->getLastVersion(), 2);
     }
 }

@@ -11,7 +11,13 @@ class Entry implements Viewable
     private $uuid;
 
     /** @var VO\Date\Time */
-    private $publishDate;
+    private $creationDate;
+
+    /** @var VO\Date\Time */
+    private $releaseDate;
+
+    /** @var VO\Option\Check */
+    private $hidden;
 
     /** @var VO\Intl\Language\Texts */
     private $names;
@@ -21,9 +27,6 @@ class Entry implements Viewable
 
     /** @var VO\Identity\Uuids */
     private $categories;
-
-    /** @var VO\Option\Check */
-    private $hide;
 
     /**
      * @param string $uuid
@@ -70,27 +73,83 @@ class Entry implements Viewable
     /**
      * @return string
      */
-    public function publishDate(): string
+    public function creationDate(): string
     {
-        return $this->publishDate->toString();
+        return $this->creationDate->toString();
     }
 
     /**
      * @return VO\Date\Time
      */
-    public function getPublishDate(): VO\Date\Time
+    public function getCreationDate(): VO\Date\Time
     {
-        return $this->publishDate;
+        return $this->creationDate;
     }
 
     /**
-     * @param VO\Date\Time $publishDate
+     * @param VO\Date\Time $creationDate
      *
      * @return Entry
      */
-    public function setPublishDate(VO\Date\Time $publishDate): Entry
+    public function setCreationDate(VO\Date\Time $creationDate): Entry
     {
-        $this->publishDate = $publishDate;
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function releaseDate(): \DateTime
+    {
+        return date_timestamp_set(date_create(), $this->releaseDate->raw());
+    }
+
+    /**
+     * @return VO\Date\Time
+     */
+    public function getReleaseDate(): VO\Date\Time
+    {
+        return $this->releaseDate;
+    }
+
+    /**
+     * @param VO\Date\Time $releaseDate
+     *
+     * @return Entry
+     */
+    public function setReleaseDate(VO\Date\Time $releaseDate): Entry
+    {
+        $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHidden(): bool
+    {
+        return $this->hidden->raw();
+    }
+
+    /**
+     * @return VO\Option\Check
+     */
+    public function getHidden(): VO\Option\Check
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param VO\Option\Check $hidden
+     *
+     * @return Entry
+     */
+    public function setHidden(VO\Option\Check $hidden): Entry
+    {
+        $this->hidden = $hidden;
 
         return $this;
     }
@@ -190,7 +249,7 @@ class Entry implements Viewable
      */
     public function categories(): array
     {
-        return $this->categories->raw();
+        return $this->categories->toArray();
     }
 
     /**
@@ -209,34 +268,6 @@ class Entry implements Viewable
     public function setCategories(VO\Identity\Uuids $categories): Entry
     {
         $this->categories = $categories;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isHidden(): bool
-    {
-        return $this->hide->raw();
-    }
-
-    /**
-     * @return VO\Option\Check
-     */
-    public function getHide(): VO\Option\Check
-    {
-        return $this->hide;
-    }
-
-    /**
-     * @param VO\Option\Check $hide
-     *
-     * @return Entry
-     */
-    public function setHide(VO\Option\Check $hide): Entry
-    {
-        $this->hide = $hide;
 
         return $this;
     }

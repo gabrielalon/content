@@ -18,7 +18,7 @@ use N3ttech\Valuing as VO;
  * @internal
  * @coversNothing
  */
-class CreateEntryHandlerTest extends HandlerTestCase
+class TranslateEntryHandlerTest extends HandlerTestCase
 {
     /** @var Service\EntryCommandManager */
     private $command;
@@ -29,6 +29,7 @@ class CreateEntryHandlerTest extends HandlerTestCase
 
         $this->register(Projection\EntryProjection::class, new InMemoryEntryProjector());
         $this->register(Command\CreateEntryHandler::class, new Command\CreateEntryHandler($repository));
+        $this->register(Command\TranslateEntryHandler::class, new Command\TranslateEntryHandler($repository));
 
         $this->command = new Service\EntryCommandManager($this->getCommandBus());
     }
@@ -39,13 +40,16 @@ class CreateEntryHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itCreatesNewBlogEntryTest(): void
+    public function itCategorizesExistingBlogEntryTest(): void
     {
         //given
         $uuid = \Ramsey\Uuid\Uuid::uuid4();
+        $names = ['pl' => 'test'];
+        $contents = ['pl' => 'test'];
+        $this->command->create($uuid->toString());
 
         //when
-        $this->command->create($uuid->toString());
+        $this->command->translate($uuid->toString(), $names, $contents);
 
         //then
         /** @var InMemoryEntryProjector $projector */
@@ -53,21 +57,25 @@ class CreateEntryHandlerTest extends HandlerTestCase
         $entity = $projector->get($uuid->toString());
 
         $this->assertEquals($entity->identifier(), $uuid->toString());
+        $this->assertEquals($entity->names(), $names);
+        $this->assertEquals($entity->contents(), $contents);
 
         $aggregateId = VO\Identity\Uuid::fromIdentity($uuid->toString());
-        $collection = $this->getStreamRepository()->load($aggregateId, 1);
+        $collection = $this->getStreamRepository()->load($aggregateId, 2);
 
         foreach ($collection->getArrayCopy() as $eventStream) {
             $event = $eventStream->getEventName();
             /** @var AggregateChanged $event */
 
-            /** @var Event\NewEntryCreated $event */
+            /** @var Event\ExistingEntryTranslated $event */
             $event = $event::fromEventStream($eventStream);
 
             $this->assertTrue($entity->getUuid()->equals($event->entryUuid()));
+            $this->assertTrue($entity->getNames()->equals($event->entryContent()->names()));
+            $this->assertTrue($entity->getContents()->equals($event->entryContent()->texts()));
         }
 
         $snapshot = $this->getSnapshotRepository()->get(AggregateType::fromAggregateRootClass(Entry::class), $aggregateId);
-        $this->assertEquals($snapshot->getLastVersion(), 1);
+        $this->assertEquals($snapshot->getLastVersion(), 2);
     }
 }

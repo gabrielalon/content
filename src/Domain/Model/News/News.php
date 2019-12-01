@@ -2,25 +2,23 @@
 
 namespace N3ttech\Content\Domain\Model\News;
 
+use N3ttech\Content\Domain\Common;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Valuing as VO;
 
 class News extends AggregateRoot
 {
     /** @var VO\Date\Time */
-    private $publishDate;
+    private $creationDate;
 
-    /** @var VO\Intl\Language\Texts */
-    private $names;
+    /** @var Common\Release */
+    private $release;
 
-    /** @var VO\Intl\Language\Contents */
-    private $contents;
+    /** @var Common\Content */
+    private $content;
 
     /** @var VO\Identity\Uuids */
     private $sites;
-
-    /** @var VO\Option\Check */
-    private $hide;
 
     /**
      * @param VO\Identity\Uuid $uuid
@@ -35,37 +33,37 @@ class News extends AggregateRoot
     }
 
     /**
-     * @param VO\Date\Time $publishDate
+     * @param VO\Date\Time $creationDate
      *
      * @return News
      */
-    public function setPublishDate(VO\Date\Time $publishDate): News
+    public function setCreationDate(VO\Date\Time $creationDate): News
     {
-        $this->publishDate = $publishDate;
+        $this->creationDate = $creationDate;
 
         return $this;
     }
 
     /**
-     * @param VO\Intl\Language\Texts $names
+     * @param Common\Release $release
      *
      * @return News
      */
-    public function setNames(VO\Intl\Language\Texts $names): News
+    public function setRelease(Common\Release $release): News
     {
-        $this->names = $names;
+        $this->release = $release;
 
         return $this;
     }
 
     /**
-     * @param VO\Intl\Language\Contents $contents
+     * @param Common\Content $content
      *
      * @return News
      */
-    public function setContents(VO\Intl\Language\Contents $contents): News
+    public function setContent(Common\Content $content): News
     {
-        $this->contents = $contents;
+        $this->content = $content;
 
         return $this;
     }
@@ -78,18 +76,6 @@ class News extends AggregateRoot
     public function setSites(VO\Identity\Uuids $sites): News
     {
         $this->sites = $sites;
-
-        return $this;
-    }
-
-    /**
-     * @param VO\Option\Check $hide
-     *
-     * @return News
-     */
-    public function setHide(VO\Option\Check $hide): News
-    {
-        $this->hide = $hide;
 
         return $this;
     }

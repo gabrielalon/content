@@ -5,10 +5,10 @@ namespace N3ttech\Content\Test\Application\Blog\Command;
 use N3ttech\Content\Application\Blog\Command;
 use N3ttech\Content\Application\Blog\Event;
 use N3ttech\Content\Application\Blog\Service;
-use N3ttech\Content\Domain\Model\Blog\Entry;
+use N3ttech\Content\Domain\Model\Blog\Category;
 use N3ttech\Content\Domain\Model\Blog\Projection;
-use N3ttech\Content\Infrastructure\Persist\Blog\EntryRepository;
-use N3ttech\Content\Infrastructure\Projection\Blog\InMemoryEntryProjector;
+use N3ttech\Content\Infrastructure\Persist\Blog\CategoryRepository;
+use N3ttech\Content\Infrastructure\Projection\Blog\InMemoryCategoryProjector;
 use N3ttech\Content\Test\Application\HandlerTestCase;
 use N3ttech\Messaging\Aggregate\AggregateType;
 use N3ttech\Messaging\Aggregate\EventBridge\AggregateChanged;
@@ -18,19 +18,19 @@ use N3ttech\Valuing as VO;
  * @internal
  * @coversNothing
  */
-class CreateEntryHandlerTest extends HandlerTestCase
+class CreateCategoryHandlerTest extends HandlerTestCase
 {
-    /** @var Service\EntryCommandManager */
+    /** @var Service\CategoryCommandManager */
     private $command;
 
     public function setUp(): void
     {
-        $repository = new EntryRepository($this->getEventStorage(), $this->getSnapshotStorage());
+        $repository = new CategoryRepository($this->getEventStorage(), $this->getSnapshotStorage());
 
-        $this->register(Projection\EntryProjection::class, new InMemoryEntryProjector());
-        $this->register(Command\CreateEntryHandler::class, new Command\CreateEntryHandler($repository));
+        $this->register(Projection\CategoryProjection::class, new InMemoryCategoryProjector());
+        $this->register(Command\CreateCategoryHandler::class, new Command\CreateCategoryHandler($repository));
 
-        $this->command = new Service\EntryCommandManager($this->getCommandBus());
+        $this->command = new Service\CategoryCommandManager($this->getCommandBus());
     }
 
     /**
@@ -39,7 +39,7 @@ class CreateEntryHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itCreatesNewBlogEntryTest(): void
+    public function itCreatesNewBlogCategoryTest(): void
     {
         //given
         $uuid = \Ramsey\Uuid\Uuid::uuid4();
@@ -48,8 +48,8 @@ class CreateEntryHandlerTest extends HandlerTestCase
         $this->command->create($uuid->toString());
 
         //then
-        /** @var InMemoryEntryProjector $projector */
-        $projector = $this->container->get(Projection\EntryProjection::class);
+        /** @var InMemoryCategoryProjector $projector */
+        $projector = $this->container->get(Projection\CategoryProjection::class);
         $entity = $projector->get($uuid->toString());
 
         $this->assertEquals($entity->identifier(), $uuid->toString());
@@ -61,13 +61,13 @@ class CreateEntryHandlerTest extends HandlerTestCase
             $event = $eventStream->getEventName();
             /** @var AggregateChanged $event */
 
-            /** @var Event\NewEntryCreated $event */
+            /** @var Event\NewCategoryCreated $event */
             $event = $event::fromEventStream($eventStream);
 
-            $this->assertTrue($entity->getUuid()->equals($event->entryUuid()));
+            $this->assertTrue($entity->getUuid()->equals($event->categoryUuid()));
         }
 
-        $snapshot = $this->getSnapshotRepository()->get(AggregateType::fromAggregateRootClass(Entry::class), $aggregateId);
+        $snapshot = $this->getSnapshotRepository()->get(AggregateType::fromAggregateRootClass(Category::class), $aggregateId);
         $this->assertEquals($snapshot->getLastVersion(), 1);
     }
 }

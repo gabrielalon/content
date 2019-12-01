@@ -18,24 +18,14 @@ interface EntryProjection extends EventProjector
     public function onExistingEntryCategorized(Event\ExistingEntryCategorized $event): void;
 
     /**
-     * @param Event\ExistingEntryHidden $event
-     */
-    public function onExistingEntryHidden(Event\ExistingEntryHidden $event): void;
-
-    /**
-     * @param Event\ExistingEntryShown $event
-     */
-    public function onExistingEntryShown(Event\ExistingEntryShown $event): void;
-
-    /**
      * @param Event\ExistingEntryTranslated $event
      */
     public function onExistingEntryTranslated(Event\ExistingEntryTranslated $event): void;
 
     /**
-     * @param Event\ExistingEntryUpdated $event
+     * @param Event\ExistingEntryReleased $event
      */
-    public function onExistingEntryUpdated(Event\ExistingEntryUpdated $event): void;
+    public function onExistingEntryReleased(Event\ExistingEntryReleased $event): void;
 
     /**
      * @param Event\ExistingEntryRemoved $event

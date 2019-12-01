@@ -10,7 +10,7 @@ class InMemoryEntryQuery implements Query\V1\EntryQuery
     private $entities;
 
     /**
-     * @param null|Query\ReadModel\EntryCollection $entities
+     * @param Query\ReadModel\EntryCollection|null $entities
      */
     public function __construct(Query\ReadModel\EntryCollection $entities = null)
     {
@@ -50,10 +50,7 @@ class InMemoryEntryQuery implements Query\V1\EntryQuery
     private function checkExistence(string $uuid): void
     {
         if (false === $this->entities->has($uuid)) {
-            throw new \RuntimeException(\sprintf(
-                'Entry does not exists on given uuid: %s',
-                $uuid
-            ));
+            throw new \RuntimeException(\sprintf('Entry does not exists on given uuid: %s', $uuid));
         }
     }
 }

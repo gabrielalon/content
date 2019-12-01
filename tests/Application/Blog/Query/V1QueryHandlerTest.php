@@ -19,8 +19,14 @@ class V1QueryHandlerTest extends HandlerTestCase
     /** @var Query\ReadModel\Entry */
     private $entry;
 
+    /** @var Service\EntryQueryManager */
+    private $entryQuery;
+
     /** @var Query\ReadModel\Category */
     private $category;
+
+    /** @var Service\CategoryQueryManager */
+    private $categoryQuery;
 
     /**
      * @throws \Assert\AssertionFailedException
@@ -29,7 +35,7 @@ class V1QueryHandlerTest extends HandlerTestCase
     public function setUp(): void
     {
         $this->entry = Query\ReadModel\Entry::fromUuid(Uuid::uuid4()->toString())
-            ->setPublishDate(VO\Date\Time::fromTimestamp(time()))
+            ->setReleaseDate(VO\Date\Time::fromTimestamp(time()))
         ;
 
         $collection = new Query\ReadModel\EntryCollection();
@@ -39,6 +45,8 @@ class V1QueryHandlerTest extends HandlerTestCase
         $this->register(Query\V1\FindOneEntryByUuidHandler::class, new Query\V1\FindOneEntryByUuidHandler($entryQuery));
         $this->register(Query\V1\FindAllActiveEntriesHandler::class, new Query\V1\FindAllActiveEntriesHandler($entryQuery));
 
+        $this->entryQuery = new Service\EntryQueryManager($this->getQueryBus());
+
         $this->category = Query\ReadModel\Category::fromUuid(Uuid::uuid4()->toString());
 
         $collection = new Query\ReadModel\CategoryCollection();
@@ -47,6 +55,8 @@ class V1QueryHandlerTest extends HandlerTestCase
         $entryQuery = new InMemoryCategoryQuery($collection);
         $this->register(Query\V1\FindOneCategoryByUuidHandler::class, new Query\V1\FindOneCategoryByUuidHandler($entryQuery));
         $this->register(Query\V1\FindAllSitedCategoriesHandler::class, new Query\V1\FindAllSitedCategoriesHandler($entryQuery));
+
+        $this->categoryQuery = new Service\CategoryQueryManager($this->getQueryBus());
     }
 
     /**
@@ -54,9 +64,7 @@ class V1QueryHandlerTest extends HandlerTestCase
      */
     public function isFindsEntryByUuid()
     {
-        $manager = new Service\EntryQueryManager($this->getQueryBus());
-
-        $entry = $manager->findOneEntryByUuid($this->entry->identifier());
+        $entry = $this->entryQuery->findOneEntryByUuid($this->entry->identifier());
 
         $this->assertTrue($entry->getUuid()->equals($this->entry->getUuid()));
     }
@@ -66,9 +74,7 @@ class V1QueryHandlerTest extends HandlerTestCase
      */
     public function isFindsAllActiveEntries()
     {
-        $manager = new Service\EntryQueryManager($this->getQueryBus());
-
-        $entries = $manager->findAllActiveEntries();
+        $entries = $this->entryQuery->findAllActiveEntries();
 
         $this->assertTrue(1 == $entries->count());
     }
@@ -78,9 +84,7 @@ class V1QueryHandlerTest extends HandlerTestCase
      */
     public function isFindsCategoryByUuid()
     {
-        $manager = new Service\CategoryQueryManager($this->getQueryBus());
-
-        $category = $manager->findOneCategoryByUuid($this->category->identifier());
+        $category = $this->categoryQuery->findOneCategoryByUuid($this->category->identifier());
 
         $this->assertTrue($category->getUuid()->equals($this->category->getUuid()));
     }
@@ -92,9 +96,7 @@ class V1QueryHandlerTest extends HandlerTestCase
      */
     public function isFindsAllSitedCategories()
     {
-        $manager = new Service\CategoryQueryManager($this->getQueryBus());
-
-        $categories = $manager->findAllSitedCategories(Uuid::uuid4()->toString());
+        $categories = $this->categoryQuery->findAllSitedCategories(Uuid::uuid4()->toString());
 
         $this->assertTrue(1 == $categories->count());
     }

@@ -16,9 +16,6 @@ class CreateEntryHandler extends EntryHandler
      */
     public function run(Message $command): void
     {
-        $this->repository->save(Entry::createNewEntry(
-            VO\Identity\Uuid::fromIdentity($command->getUuid()),
-            VO\Date\Time::fromTimestamp($command->getPublishDate())
-        ));
+        $this->repository->save(Entry::createNewEntry(VO\Identity\Uuid::fromIdentity($command->getUuid())));
     }
 }

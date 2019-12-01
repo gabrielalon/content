@@ -30,10 +30,7 @@ class Container implements PsrContainer\ContainerInterface
     public function get($id)
     {
         if (false === $this->has($id)) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Container does not have given service %s',
-                $id
-            ));
+            throw new \InvalidArgumentException(\sprintf('Container does not have given service %s', $id));
         }
 
         return $this->map[$id];

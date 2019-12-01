@@ -2,8 +2,10 @@
 
 $config = PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
+    ->setUsingCache(false)
     ->setRules([
-        '@PhpCsFixer' => true
+        '@Symfony' => true,
+        'no_superfluous_phpdoc_tags' => []
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

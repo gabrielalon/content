@@ -2,20 +2,20 @@
 
 namespace N3ttech\Content\Application\Blog\Event;
 
+use N3ttech\Content\Domain\Common\Release;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
-use N3ttech\Valuing as VO;
 
-class ExistingEntryUpdated extends EntryEvent
+class ExistingEntryReleased extends EntryEvent
 {
     /**
-     * @throws \Assert\AssertionFailedException
+     * @return Release
      *
-     * @return VO\Date\Time
+     * @throws \Assert\AssertionFailedException
      */
-    public function entryPublishDate(): VO\Date\Time
+    public function entryRelease(): Release
     {
-        return VO\Date\Time::fromTimestamp((int) $this->payload['publish_date'] ?? 0);
+        return Release::fromArray($this->payload['release'] ?? []);
     }
 
     /**
@@ -26,6 +26,6 @@ class ExistingEntryUpdated extends EntryEvent
     public function populate(AggregateRoot $entry): void
     {
         $entry->setUuid($this->entryUuid());
-        $entry->setPublishDate($this->entryPublishDate());
+        $entry->setRelease($this->entryRelease());
     }
 }

@@ -2,9 +2,9 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
+use N3ttech\Content\Domain\Common\Content;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Messaging\Message\Domain\Message;
-use N3ttech\Valuing as VO;
 
 class TranslateEntryHandler extends EntryHandler
 {
@@ -19,10 +19,7 @@ class TranslateEntryHandler extends EntryHandler
         /** @var Entry $entry */
         $entry = $this->repository->find($command->getUuid());
 
-        $entry->translate(
-            VO\Intl\Language\Texts::fromArray($command->getNames()),
-            VO\Intl\Language\Contents::fromArray($command->getContents())
-        );
+        $entry->translate(Content::fromData($command->getNames(), $command->getContents()));
 
         $this->repository->save($entry);
     }

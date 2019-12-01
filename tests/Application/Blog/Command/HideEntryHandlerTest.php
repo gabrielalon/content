@@ -18,7 +18,7 @@ use N3ttech\Valuing as VO;
  * @internal
  * @coversNothing
  */
-class CreateEntryHandlerTest extends HandlerTestCase
+class HideEntryHandlerTest extends HandlerTestCase
 {
     /** @var Service\EntryCommandManager */
     private $command;
@@ -29,6 +29,7 @@ class CreateEntryHandlerTest extends HandlerTestCase
 
         $this->register(Projection\EntryProjection::class, new InMemoryEntryProjector());
         $this->register(Command\CreateEntryHandler::class, new Command\CreateEntryHandler($repository));
+        $this->register(Command\HideEntryHandler::class, new Command\HideEntryHandler($repository));
 
         $this->command = new Service\EntryCommandManager($this->getCommandBus());
     }
@@ -39,13 +40,14 @@ class CreateEntryHandlerTest extends HandlerTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itCreatesNewBlogEntryTest(): void
+    public function itHidesExistingBlogEntryTest(): void
     {
         //given
         $uuid = \Ramsey\Uuid\Uuid::uuid4();
+        $this->command->create($uuid->toString());
 
         //when
-        $this->command->create($uuid->toString());
+        $this->command->hide($uuid->toString());
 
         //then
         /** @var InMemoryEntryProjector $projector */
@@ -53,21 +55,23 @@ class CreateEntryHandlerTest extends HandlerTestCase
         $entity = $projector->get($uuid->toString());
 
         $this->assertEquals($entity->identifier(), $uuid->toString());
+        $this->assertTrue($entity->isHidden());
 
         $aggregateId = VO\Identity\Uuid::fromIdentity($uuid->toString());
-        $collection = $this->getStreamRepository()->load($aggregateId, 1);
+        $collection = $this->getStreamRepository()->load($aggregateId, 2);
 
         foreach ($collection->getArrayCopy() as $eventStream) {
             $event = $eventStream->getEventName();
             /** @var AggregateChanged $event */
 
-            /** @var Event\NewEntryCreated $event */
+            /** @var Event\ExistingEntryReleased $event */
             $event = $event::fromEventStream($eventStream);
 
             $this->assertTrue($entity->getUuid()->equals($event->entryUuid()));
+            $this->assertTrue($entity->getHidden()->equals($event->entryRelease()->hidden()));
         }
 
         $snapshot = $this->getSnapshotRepository()->get(AggregateType::fromAggregateRootClass(Entry::class), $aggregateId);
-        $this->assertEquals($snapshot->getLastVersion(), 1);
+        $this->assertEquals($snapshot->getLastVersion(), 2);
     }
 }

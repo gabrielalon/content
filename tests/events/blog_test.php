@@ -4,10 +4,8 @@ use N3ttech\Content\Application\Blog;
 
 return [
     Blog\Event\ExistingEntryRemoved::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
-    Blog\Event\ExistingEntryUpdated::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
+    Blog\Event\ExistingEntryReleased::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
     Blog\Event\ExistingEntryTranslated::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
-    Blog\Event\ExistingEntryShown::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
-    Blog\Event\ExistingEntryHidden::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
     Blog\Event\ExistingEntryCategorized::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
     Blog\Event\NewEntryCreated::class => [\N3ttech\Content\Domain\Model\Blog\Projection\EntryProjection::class],
 

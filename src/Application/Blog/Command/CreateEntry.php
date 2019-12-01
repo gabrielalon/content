@@ -2,6 +2,13 @@
 
 namespace N3ttech\Content\Application\Blog\Command;
 
-class CreateEntry extends UpdateEntry
+class CreateEntry extends Command
 {
+    /**
+     * @param string $uuid
+     */
+    public function __construct(string $uuid)
+    {
+        $this->setUuid($uuid);
+    }
 }

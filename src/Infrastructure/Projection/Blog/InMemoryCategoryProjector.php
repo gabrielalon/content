@@ -12,7 +12,7 @@ class InMemoryCategoryProjector implements CategoryProjection
     private $entities;
 
     /**
-     * @param null|ReadModel\CategoryCollection $entities
+     * @param ReadModel\CategoryCollection|null $entities
      */
     public function __construct(ReadModel\CategoryCollection $entities = null)
     {
@@ -119,10 +119,7 @@ class InMemoryCategoryProjector implements CategoryProjection
     private function checkExistence(string $uuid): void
     {
         if (false === $this->entities->has($uuid)) {
-            throw new \RuntimeException(\sprintf(
-                'Category does not exists on given uuid: %s',
-                $uuid
-            ));
+            throw new \RuntimeException(\sprintf('Category does not exists on given uuid: %s', $uuid));
         }
     }
 }

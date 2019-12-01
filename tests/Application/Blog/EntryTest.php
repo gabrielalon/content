@@ -3,6 +3,7 @@
 namespace N3ttech\Content\Test\Application\Blog;
 
 use N3ttech\Content\Application\Blog\Event;
+use N3ttech\Content\Domain\Common;
 use N3ttech\Content\Domain\Model\Blog\Entry;
 use N3ttech\Content\Test\Application\AggregateChangedTestCase;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
@@ -19,9 +20,6 @@ class EntryTest extends AggregateChangedTestCase
     /** @var VO\Identity\Uuid */
     private $uuid;
 
-    /** @var VO\Date\Time */
-    private $publishDate;
-
     /**
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
@@ -29,7 +27,6 @@ class EntryTest extends AggregateChangedTestCase
     protected function setUp(): void
     {
         $this->uuid = VO\Identity\Uuid::fromIdentity(Uuid::uuid4()->toString());
-        $this->publishDate = VO\Date\Time::fromTimestamp(time());
     }
 
     /**
@@ -39,7 +36,7 @@ class EntryTest extends AggregateChangedTestCase
      */
     public function itCreatesNewEntryTest()
     {
-        $entry = Entry::createNewEntry($this->uuid, $this->publishDate);
+        $entry = Entry::createNewEntry($this->uuid);
 
         /** @var AggregateChanged[] $events */
         $events = $this->popRecordedEvents($entry);
@@ -51,7 +48,6 @@ class EntryTest extends AggregateChangedTestCase
 
         $this->assertSame(Event\NewEntryCreated::class, $event->messageName());
         $this->assertTrue($this->uuid->equals($event->entryUuid()));
-        $this->assertTrue($this->publishDate->equals($event->entryPublishDate()));
     }
 
     /**
@@ -60,25 +56,25 @@ class EntryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itUpdatesExistingEntryTest()
+    public function itReleasesExistingEntryTest()
     {
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());
 
-        $publishDate = VO\Date\Time::fromTimestamp(time());
+        $release = Common\Release::fromData(time(), true);
 
-        $entry->update($publishDate);
+        $entry->release($release);
 
         /** @var AggregateChanged[] $events */
         $events = $this->popRecordedEvents($entry);
 
         $this->assertCount(1, $events);
 
-        /** @var Event\ExistingEntryUpdated $event */
+        /** @var Event\ExistingEntryReleased $event */
         $event = $events[0];
 
-        $this->assertSame(Event\ExistingEntryUpdated::class, $event->messageName());
-        $this->assertTrue($publishDate->equals($event->entryPublishDate()));
+        $this->assertSame(Event\ExistingEntryReleased::class, $event->messageName());
+        $this->assertTrue($release->equals($event->entryRelease()));
     }
 
     /**
@@ -92,10 +88,9 @@ class EntryTest extends AggregateChangedTestCase
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());
 
-        $names = VO\Intl\Language\Texts::fromArray(['pl' => 'Name']);
-        $contents = VO\Intl\Language\Contents::fromArray(['pl' => 'Content']);
+        $content = Common\Content::fromData(['pl' => 'Name'], ['pl' => 'Content']);
 
-        $entry->translate($names, $contents);
+        $entry->translate($content);
 
         /** @var AggregateChanged[] $events */
         $events = $this->popRecordedEvents($entry);
@@ -106,8 +101,7 @@ class EntryTest extends AggregateChangedTestCase
         $event = $events[0];
 
         $this->assertSame(Event\ExistingEntryTranslated::class, $event->messageName());
-        $this->assertTrue($names->equals($event->entryNames()));
-        $this->assertTrue($contents->equals($event->entryContents()));
+        $this->assertTrue($content->equals($event->entryContent()));
     }
 
     /**
@@ -155,11 +149,11 @@ class EntryTest extends AggregateChangedTestCase
 
         $this->assertCount(1, $events);
 
-        /** @var Event\ExistingEntryShown $event */
+        /** @var Event\ExistingEntryReleased $event */
         $event = $events[0];
 
-        $this->assertSame(Event\ExistingEntryShown::class, $event->messageName());
-        $this->assertFalse($event->entryHide()->raw());
+        $this->assertSame(Event\ExistingEntryReleased::class, $event->messageName());
+        $this->assertFalse($event->entryRelease()->hidden()->raw());
     }
 
     /**
@@ -180,11 +174,11 @@ class EntryTest extends AggregateChangedTestCase
 
         $this->assertCount(1, $events);
 
-        /** @var Event\ExistingEntryHidden $event */
+        /** @var Event\ExistingEntryReleased $event */
         $event = $events[0];
 
-        $this->assertSame(Event\ExistingEntryHidden::class, $event->messageName());
-        $this->assertTrue($event->entryHide()->raw());
+        $this->assertSame(Event\ExistingEntryReleased::class, $event->messageName());
+        $this->assertTrue($event->entryRelease()->hidden()->raw());
     }
 
     /**
@@ -226,7 +220,7 @@ class EntryTest extends AggregateChangedTestCase
     private function newEntryCreated(): AggregateChanged
     {
         return Event\NewEntryCreated::occur($this->uuid->toString(), [
-            'publish_date' => $this->publishDate->raw(),
+            'creation_date' => time(),
         ]);
     }
 }

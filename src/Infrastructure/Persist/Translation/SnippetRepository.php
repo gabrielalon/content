@@ -1,28 +1,28 @@
 <?php
 
-namespace N3ttech\Content\Infrastructure\Persist\Snippet;
+namespace N3ttech\Content\Infrastructure\Persist\Translation;
 
-use N3ttech\Content\Domain\Model\Snippet\Snippet;
+use N3ttech\Content\Domain\Model\Translation\Translation;
 use N3ttech\Messaging\Aggregate\AggregateRoot;
 use N3ttech\Messaging\Aggregate\Persist\AggregateRepository;
 use N3ttech\Valuing as VO;
 
-class SnippetRepository extends AggregateRepository
+class TranslationRepository extends AggregateRepository
 {
     /**
      * {@inheritdoc}
      */
     public function getAggregateRootClass(): string
     {
-        return Snippet::class;
+        return Translation::class;
     }
 
     /**
-     * @param Snippet $snippet
+     * @param Translation $snippet
      *
      * @throws \Exception
      */
-    public function save(Snippet $snippet): void
+    public function save(Translation $snippet): void
     {
         $this->saveAggregateRoot($snippet);
     }
@@ -32,7 +32,7 @@ class SnippetRepository extends AggregateRepository
      *
      * @throws \Assert\AssertionFailedException
      *
-     * @return AggregateRoot|Snippet
+     * @return AggregateRoot|Translation
      */
     public function find(string $uuid): AggregateRoot
     {

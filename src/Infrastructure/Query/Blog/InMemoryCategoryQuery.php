@@ -10,7 +10,7 @@ class InMemoryCategoryQuery implements Query\V1\CategoryQuery
     private $entities;
 
     /**
-     * @param null|Query\ReadModel\CategoryCollection $entities
+     * @param Query\ReadModel\CategoryCollection|null $entities
      */
     public function __construct(Query\ReadModel\CategoryCollection $entities = null)
     {
@@ -52,10 +52,7 @@ class InMemoryCategoryQuery implements Query\V1\CategoryQuery
     private function checkExistence(string $uuid): void
     {
         if (false === $this->entities->has($uuid)) {
-            throw new \RuntimeException(\sprintf(
-                'Category does not exists on given uuid: %s',
-                $uuid
-            ));
+            throw new \RuntimeException(\sprintf('Category does not exists on given uuid: %s', $uuid));
         }
     }
 }

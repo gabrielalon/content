@@ -2,7 +2,7 @@
 
 namespace N3ttech\Content\Application\Blog\Query\V1;
 
-class FindOneEntryByUuid extends EntryableQuery
+final class FindOneEntryByUuid extends EntryableQuery
 {
     /** @var string */
     private $uuid;

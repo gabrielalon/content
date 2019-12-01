@@ -2,6 +2,6 @@
 
 namespace N3ttech\Content\Application\Blog\Query\V1;
 
-class FindAllActiveEntries extends EntryableQuery
+final class FindAllActiveEntries extends EntryableQuery
 {
 }

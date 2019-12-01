@@ -34,7 +34,7 @@ class EntryTest extends AggregateChangedTestCase
      *
      * @throws \Assert\AssertionFailedException
      */
-    public function itCreatesNewEntryTest()
+    public function itCreatesNewEntryTest(): void
     {
         $entry = Entry::createNewEntry($this->uuid);
 
@@ -56,7 +56,7 @@ class EntryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itReleasesExistingEntryTest()
+    public function itReleasesExistingEntryTest(): void
     {
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());
@@ -83,7 +83,7 @@ class EntryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itTranslatesExistingEntryTest()
+    public function itTranslatesExistingEntryTest(): void
     {
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());
@@ -110,7 +110,7 @@ class EntryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itCategorizesExistingEntryTest()
+    public function itCategorizesExistingEntryTest(): void
     {
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());
@@ -137,7 +137,7 @@ class EntryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itShowsExistingEntryTest()
+    public function itShowsExistingEntryTest(): void
     {
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());
@@ -162,7 +162,7 @@ class EntryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itHidesExistingEntryTest()
+    public function itHidesExistingEntryTest(): void
     {
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());
@@ -184,7 +184,7 @@ class EntryTest extends AggregateChangedTestCase
     /**
      * @test
      */
-    public function itRemovesExistingEntryTest()
+    public function itRemovesExistingEntryTest(): void
     {
         /** @var Entry $entry */
         $entry = $this->reconstituteReturnPackageFromHistory($this->newEntryCreated());

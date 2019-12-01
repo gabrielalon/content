@@ -62,7 +62,7 @@ class V1QueryHandlerTest extends HandlerTestCase
     /**
      * @test
      */
-    public function isFindsEntryByUuid()
+    public function isFindsEntryByUuid(): void
     {
         $entry = $this->entryQuery->findOneEntryByUuid($this->entry->identifier());
 
@@ -72,7 +72,7 @@ class V1QueryHandlerTest extends HandlerTestCase
     /**
      * @test
      */
-    public function isFindsAllActiveEntries()
+    public function isFindsAllActiveEntries(): void
     {
         $entries = $this->entryQuery->findAllActiveEntries();
 
@@ -82,7 +82,7 @@ class V1QueryHandlerTest extends HandlerTestCase
     /**
      * @test
      */
-    public function isFindsCategoryByUuid()
+    public function isFindsCategoryByUuid(): void
     {
         $category = $this->categoryQuery->findOneCategoryByUuid($this->category->identifier());
 
@@ -94,7 +94,7 @@ class V1QueryHandlerTest extends HandlerTestCase
      *
      * @throws \Exception
      */
-    public function isFindsAllSitedCategories()
+    public function isFindsAllSitedCategories(): void
     {
         $categories = $this->categoryQuery->findAllSitedCategories(Uuid::uuid4()->toString());
 

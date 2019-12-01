@@ -1,8 +1,8 @@
 <?php
 
-namespace N3ttech\Content\Application\Blog\Query\V1;
+namespace N3ttech\Content\Application\News\Query\V1;
 
-final class FindOneCategoryByUuid extends CategorizableQuery
+final class FindOneNewsByUuid extends Query
 {
     /** @var string */
     private $uuid;

@@ -37,7 +37,7 @@ class CategoryTest extends AggregateChangedTestCase
      *
      * @throws \Assert\AssertionFailedException
      */
-    public function itCreatesNewCategoryTest()
+    public function itCreatesNewCategoryTest(): void
     {
         $category = Category::createNewCategory($this->uuid);
 
@@ -59,7 +59,7 @@ class CategoryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itMovesExistingCategoryTest()
+    public function itMovesExistingCategoryTest(): void
     {
         /** @var Category $category */
         $category = $this->reconstituteReturnPackageFromHistory($this->newCategoryCreated());
@@ -86,7 +86,7 @@ class CategoryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itTranslatesExistingCategoryTest()
+    public function itTranslatesExistingCategoryTest(): void
     {
         /** @var Category $category */
         $category = $this->reconstituteReturnPackageFromHistory($this->newCategoryCreated());
@@ -113,7 +113,7 @@ class CategoryTest extends AggregateChangedTestCase
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
      */
-    public function itSitesExistingCategoryTest()
+    public function itSitesExistingCategoryTest(): void
     {
         /** @var Category $category */
         $category = $this->reconstituteReturnPackageFromHistory($this->newCategoryCreated());
@@ -137,7 +137,7 @@ class CategoryTest extends AggregateChangedTestCase
     /**
      * @test
      */
-    public function itRemovesExistingCategoryTest()
+    public function itRemovesExistingCategoryTest(): void
     {
         /** @var Category $category */
         $category = $this->reconstituteReturnPackageFromHistory($this->newCategoryCreated());
